@@ -1,17 +1,16 @@
 import { ArrowButton } from 'components/arrow-button';
 import { Button } from 'components/button';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { RadioGroup } from '../radio-group';
+import clsx from 'clsx';
 
 import styles from './ArticleParamsForm.module.scss';
 
 export const ArticleParamsForm = () => {
-	const container = useRef<HTMLElement | null>(null);
+	const [isOpen, setIsOpen] = useState(false);
 
 	function handleClick() {
-		if (container.current) {
-			container.current.classList.toggle(styles['container_open']);
-		}
+		setIsOpen(!isOpen);
 	}
 
 	const options = [
@@ -25,7 +24,8 @@ export const ArticleParamsForm = () => {
 	return (
 		<>
 			<ArrowButton onClick={handleClick} />
-			<aside className={styles.container} ref={container}>
+			<aside
+				className={clsx(styles.container, isOpen && styles.container_open)}>
 				<form className={styles.form}>
 					<RadioGroup
 						selected={selected}

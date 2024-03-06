@@ -1,7 +1,8 @@
 import arrow from 'src/images/arrow.svg';
-import { useRef } from 'react';
+import { useState } from 'react';
 
 import styles from './ArrowButton.module.scss';
+import clsx from 'clsx';
 
 /** Функция для обработки открытия/закрытия формы */
 export type OnClick = () => void;
@@ -11,32 +12,24 @@ type ArrowButtonProps = {
 };
 
 export const ArrowButton = ({ onClick }: ArrowButtonProps) => {
-	const button = useRef<HTMLDivElement | null>(null);
-	const arrowImage = useRef<HTMLImageElement | null>(null);
+	const [isOpen, setIsOpen] = useState(false);
 
 	const handleClick = () => {
-		onClick();
-		if (button.current) {
-			button.current.classList.toggle(styles['container_open']);
-		}
-		if (arrowImage.current) {
-			arrowImage.current.classList.toggle(styles['arrow_open']);
-		}
+		onClick()
+		setIsOpen(!isOpen)
 	};
 
 	return (
 		<div
-			ref={button}
 			onClick={handleClick}
 			role='button'
 			aria-label='Открыть/Закрыть форму параметров статьи'
 			tabIndex={0}
-			className={styles.container}>
+			className={clsx(styles.container, isOpen && styles.container_open)}>
 			<img
 				src={arrow}
-				ref={arrowImage}
 				alt='иконка стрелочки'
-				className={styles.arrow}
+				className={clsx(styles.arrow, isOpen && styles.arrow_open)}
 			/>
 		</div>
 	);
