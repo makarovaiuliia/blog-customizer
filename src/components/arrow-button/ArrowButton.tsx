@@ -15,8 +15,8 @@ export const ArrowButton = ({ onClick }: ArrowButtonProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleClick = () => {
-		onClick()
-		setIsOpen(!isOpen)
+		onClick();
+		setIsOpen(!isOpen);
 	};
 
 	return (
