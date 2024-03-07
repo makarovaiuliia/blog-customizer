@@ -1,5 +1,5 @@
 import arrow from 'src/images/arrow.svg';
-import { useState } from 'react';
+import { SyntheticEvent } from 'react';
 
 import styles from './ArrowButton.module.scss';
 import clsx from 'clsx';
@@ -8,20 +8,17 @@ import clsx from 'clsx';
 export type OnClick = () => void;
 
 type ArrowButtonProps = {
-	onClick: OnClick;
+	handleClick(): void;
+	isOpen: boolean;
 };
 
-export const ArrowButton = ({ onClick }: ArrowButtonProps) => {
-	const [isOpen, setIsOpen] = useState(false);
-
-	const handleClick = () => {
-		onClick();
-		setIsOpen(!isOpen);
-	};
-
+export const ArrowButton = ({ handleClick, isOpen }: ArrowButtonProps) => {
 	return (
 		<div
-			onClick={handleClick}
+			onClick={(e: SyntheticEvent) => {
+				e.stopPropagation();
+				handleClick();
+			}}
 			role='button'
 			aria-label='Открыть/Закрыть форму параметров статьи'
 			tabIndex={0}
